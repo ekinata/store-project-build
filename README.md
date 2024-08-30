@@ -55,14 +55,14 @@ Docker yapı sürecini gerçekleştirir. Docker build komutlarınızı bu bölü
 ```
 
 ### `fresh`
-Yapı artifaktlarını temizler ve projeyi sıfırdan inşa eder.
+Yapı mirasını temizler ve projeyi sıfırdan inşa eder.
 
 ```bash
 ./toolbox.sh fresh
 ```
 
 ### `clean`
-Yapı artifaktlarını temizler.
+Yapı mirasını temizler.
 
 ```bash
 ./toolbox.sh clean
@@ -94,5 +94,4 @@ En son değişiklikleri çekmek ve projeyi güncellemek için:
 
 ```bash
 ./toolbox.sh update
-```
 ```
