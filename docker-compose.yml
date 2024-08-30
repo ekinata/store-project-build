@@ -9,7 +9,7 @@ services:
       - 3000:3000
       - 443:3000
     volumes:
-      - ./nextjs:/app
+      - ./data/nextjs:/app
     depends_on:
       - laravel-store-rest-api
     networks:
@@ -20,9 +20,9 @@ services:
       context: ../laravel-store-rest-api
       dockerfile: Dockerfile
     ports:
-      - 9000:9000
+      - 8000:8000
     volumes:
-      - ./laravel:/app
+      - ./data/laravel:/app
     depends_on:
       - postgres
       - keydb
@@ -33,20 +33,22 @@ services:
   postgres:
     image: postgres:15
     environment:
-      POSTGRES_USER: your_username
-      POSTGRES_PASSWORD: your_password
-      POSTGRES_DB: your_database
+      POSTGRES_USER: db_user
+      POSTGRES_PASSWORD: db_pass
+      POSTGRES_DB: store_db
+    # ports:
+    #   - 5432:5432
     volumes:
-      - ./postgres-data:/var/lib/postgresql/data
+      - ./data/postgres-data:/var/lib/postgresql/data
     networks:
       - private
 
   keydb:
     image: eqalpha/keydb
-    ports:
-      - 6379:6379
+    # ports:
+    #   - 6379:6379
     volumes:
-      - ./keydb-data:/data
+      - ./data/keydb-data:/data
     networks:
       - private
 

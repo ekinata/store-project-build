@@ -27,7 +27,7 @@ deploy() {
     # Start Laravel project
     cd ../laravel-store-rest-api
     composer install
-    cp .env.example .env
+    cp .env.demo .env
     php artisan key:generate
     php artisan migrate --seed
 }
@@ -134,7 +134,7 @@ case $arg1 in
     "help")
         # Display help information with explanations for each argument
         echo "  "
-        echo "Usage: ./build.sh [run|dev|build|update|docker-build|fresh|help]"
+        echo "Usage: ./toolbox.sh [run|dev|build|update|docker-build|fresh|help]"
         echo
         echo "Options:"
         echo "      run           |  Run the projects."
@@ -152,7 +152,7 @@ case $arg1 in
         # Invalid option
         echo "  "
         echo "Invalid option: $arg1"
-        echo "Usage: ./build.sh [run|dev|build|update|docker-build|fresh|help]"
+        echo "Usage: ./toolbox.sh [run|dev|build|update|docker-build|fresh|help]"
         echo "  "
         ;;
 esac

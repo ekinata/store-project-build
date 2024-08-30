@@ -28,7 +28,7 @@ call yarn
 :: Start Laravel project
 cd ..\laravel-store-rest-api
 call composer install
-copy .env.example .env
+copy .env.demo .env
 call php artisan key:generate
 call php artisan migrate --seed
 goto :eof
@@ -101,7 +101,7 @@ goto :help
 
 :help
 echo.
-echo Usage: build.bat [run|dev|build|update|docker-build|fresh|help]
+echo Usage: toolbox.bat [run|dev|build|update|docker-build|fresh|help]
 echo.
 echo Options:
 echo      run           |  Run the projects.
