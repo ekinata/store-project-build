@@ -60,6 +60,11 @@ arg1=$1
 
 # Switch case for build options
 case $arg1 in
+    "retrieve")
+        # Clone the repositories, install dependencies, and set up the environment
+        retrieve
+        deploy
+        ;;
     "build")
         # Clone the repositories, install dependencies, and set up the environment
         retrieve
@@ -90,7 +95,8 @@ case $arg1 in
         echo "Usage: ./build.sh [build|update|docker-build|fresh|help]"
         echo
         echo "Options:"
-        echo "      build         |  Clone the repositories, install dependencies, and set up the environment."
+        echo "      retrieve      |  Clone the repositories, install dependencies, and set up the environment."
+        echo "      build         |  Retrieve and deploy the project."
         echo "      update        |  Pull the latest changes from the repositories and apply any updates."
         echo "      docker-build  |  Perform a Docker build process. Add your Docker build commands in the script."
         echo "      fresh         |  Clean up build artifacts and perform a fresh build."
@@ -101,7 +107,7 @@ case $arg1 in
     *)
         # Invalid option
         echo "Invalid option: $arg1"
-        echo "Usage: ./build.sh [build|update|docker-build|fresh|help]"
+        echo "Usage: ./build.sh [retrieve|build|update|docker-build|fresh|clean|help]"
         ;;
 esac
 
