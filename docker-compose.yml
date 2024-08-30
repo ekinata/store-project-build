@@ -1,0 +1,57 @@
+version: '3.8'
+services:
+  next-store-ui:
+    build:
+      context: ../next-store-ui
+      dockerfile: Dockerfile
+    ports:
+      - 80:3000
+      - 3000:3000
+      - 443:3000
+    volumes:
+      - ./nextjs:/app
+    depends_on:
+      - laravel-store-rest-api
+    networks:
+      - public
+
+  laravel-store-rest-api:
+    build:
+      context: ../laravel-store-rest-api
+      dockerfile: Dockerfile
+    ports:
+      - 9000:9000
+    volumes:
+      - ./laravel:/app
+    depends_on:
+      - postgres
+      - keydb
+    networks:
+      - public
+      - private
+
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: your_username
+      POSTGRES_PASSWORD: your_password
+      POSTGRES_DB: your_database
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+    networks:
+      - private
+
+  keydb:
+    image: eqalpha/keydb
+    ports:
+      - 6379:6379
+    volumes:
+      - ./keydb-data:/data
+    networks:
+      - private
+
+networks:
+  public:
+  private:
+
+  
