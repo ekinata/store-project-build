@@ -20,20 +20,16 @@ retrieve() {
 
 # Function to deploy the project
 deploy() {
-    # Add your deployment commands here
+    # Start Next.js project
     cd ../next-store-ui
     yarn 
-    yarn build
 
-    yarn start &
-
+    # Start Laravel project
     cd ../laravel-store-rest-api
     composer install
     cp .env.example .env
     php artisan key:generate
     php artisan migrate --seed
-
-    php artisan serve &
 }
 
 # Function to update the project
@@ -55,15 +51,61 @@ docker_build() {
     docker-compose up -d --build
 }
 
+# Function to run the project
+run() {
+    # Trap to kill background processes on script exit
+    trap 'kill %1; kill %2' SIGINT SIGTERM EXIT
+
+    # Start Laravel project
+    cd ../laravel-store-rest-api
+    php artisan serve &  # Run in the background
+
+    # Start Next.js project
+    cd ../next-store-ui
+    yarn build
+    yarn start &  # Run in the background
+
+    echo "CTRL+C to exit"
+
+    # Wait for the background processes to finish
+    wait
+}
+
+# Function to run the project in dev mode
+dev() {
+    # Trap to kill background processes on script exit
+    trap 'kill %1; kill %2' SIGINT SIGTERM EXIT
+
+    # Start Laravel project
+    cd ../laravel-store-rest-api
+    php artisan serve &  # Run in the background
+
+    # Start Next.js project
+    cd ../next-store-ui
+    yarn run dev &  # Run in the background
+
+    echo "CTRL+C to exit"
+    
+    # Wait for the background processes to finish
+    wait
+}
+
 # Get 1 argument
 arg1=$1
 
 # Switch case for build options
 case $arg1 in
+    "run")
+        # Run the projects
+        run
+        ;;
+    "dev")
+        # Run the projects
+        dev
+        ;;
     "retrieve")
         # Clone the repositories, install dependencies, and set up the environment
         retrieve
-        deploy
         ;;
     "build")
         # Clone the repositories, install dependencies, and set up the environment
@@ -92,9 +134,11 @@ case $arg1 in
     "help")
         # Display help information with explanations for each argument
         echo "  "
-        echo "Usage: ./build.sh [build|update|docker-build|fresh|help]"
+        echo "Usage: ./build.sh [run|dev|build|update|docker-build|fresh|help]"
         echo
         echo "Options:"
+        echo "      run           |  Run the projects."
+        echo "      dev           |  Run the projects in dev mode."
         echo "      retrieve      |  Clone the repositories, install dependencies, and set up the environment."
         echo "      build         |  Retrieve and deploy the project."
         echo "      update        |  Pull the latest changes from the repositories and apply any updates."
@@ -106,8 +150,10 @@ case $arg1 in
         ;;
     *)
         # Invalid option
+        echo "  "
         echo "Invalid option: $arg1"
-        echo "Usage: ./build.sh [retrieve|build|update|docker-build|fresh|clean|help]"
+        echo "Usage: ./build.sh [run|dev|build|update|docker-build|fresh|help]"
+        echo "  "
         ;;
 esac
 
