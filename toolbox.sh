@@ -3,8 +3,8 @@
 # Function to clean up the build artifacts
 clean() {
     echo "Cleaning up build artifacts..."
-    rm -rf ../laravel-store-rest-api
-    rm -rf ../next-store-ui
+    sudo rm -rf ../laravel-store-rest-api
+    sudo rm -rf ../next-store-ui
 }
 
 # Function to build the project
