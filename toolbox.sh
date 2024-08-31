@@ -90,8 +90,32 @@ dev() {
     wait
 }
 
+# Function to push the code
+push() {
+    # Push the code to the repository
+    
+
+    cd ../laravel-store-rest-api
+    git add .
+    git commit -m "$msg"
+    git push
+
+    cd ../next-store-ui
+    git add .
+    git commit -m "$msg"
+    git push
+
+
+    cd ../store-project-build
+    git add .
+    git commit -m "$msg"
+    git push
+}
+
 # Get 1 argument
 arg1=$1
+# Get arg 2 or default to empty string
+msg=${2:-''}
 
 # Switch case for build options
 case $arg1 in
@@ -131,15 +155,20 @@ case $arg1 in
         # Clean up build artifacts
         clean
         ;;
+    "push")
+        # Push the code to the repository
+        push
+        ;;
     "help")
         # Display help information with explanations for each argument
         echo "  "
-        echo "Usage: ./toolbox.sh [run|dev|build|update|docker-build|fresh|help]"
+        echo "Usage: ./toolbox.sh [run|dev|retrieve|push|build|update|docker-build|fresh|help]"
         echo
         echo "Options:"
         echo "      run           |  Run the projects."
         echo "      dev           |  Run the projects in dev mode."
         echo "      retrieve      |  Clone the repositories, install dependencies, and set up the environment."
+        echo "      push          |  Push the code to the repository."
         echo "      build         |  Retrieve and deploy the project."
         echo "      update        |  Pull the latest changes from the repositories and apply any updates."
         echo "      docker-build  |  Perform a Docker build process. Add your Docker build commands in the script."
@@ -152,7 +181,7 @@ case $arg1 in
         # Invalid option
         echo "  "
         echo "Invalid option: $arg1"
-        echo "Usage: ./toolbox.sh [run|dev|build|update|docker-build|fresh|help]"
+        echo "Usage: ./toolbox.sh [run|dev|retrieve|push|build|update|docker-build|fresh|help]"
         echo "  "
         ;;
 esac
