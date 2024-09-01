@@ -1,5 +1,12 @@
 #!/bin/bash
 
+# Repo addresses:
+# API:
+api_repo=https://github.com/ekinata/laravel-store-rest-api.git
+# UI:
+ui_repo=https://github.com/ekinata/next-store-ui.git
+
+
 # Function to clean up the build artifacts
 clean() {
     echo "Cleaning up build artifacts..."
@@ -10,10 +17,10 @@ clean() {
 # Function to build the project
 retrieve() {
     # Clone the repository
-    git clone https://github.com/ekinata/laravel-store-rest-api.git ../laravel-store-rest-api
+    git clone $api_repo ../laravel-store-rest-api
 
     cd ../store-project-build
-    git clone https://github.com/ekinata/next-store-ui.git ../next-store-ui
+    git clone $ui_repo ../next-store-ui
 
     echo "Retrieve completed successfully"
 }
