@@ -10,7 +10,9 @@ REM I have to use if-else and in batch functions are not really reliable
 REM so i use it like this as a quick solution.
 REM Feel free to modify it to suit your needs.
 REM #################################
-
+REM TO DO:
+REM - Still works background processes after script exit
+REM #################################
 
 REM Repo addresses:
 REM Laravel:
